@@ -334,14 +334,13 @@ jobs:
         if: github.event == 'release'
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.YOURTOKEN }}
+          repo_token: ${{ secrets.SEARIY_TOKEN }}
           file: ./artifact/firmware/*
           tag: ${{ github.ref }}
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEARIY_TOKEN }}
         with:
+          token: ${{ secrets.SEARIY_TOKEN }}
           retain_days: 15
-          keep_minimum_runs: 0
+          keep_minimum_runs: 1
