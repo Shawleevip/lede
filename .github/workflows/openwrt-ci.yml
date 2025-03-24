@@ -329,8 +329,7 @@ jobs:
         with:
           name: OpenWrt_firmware
           path: ./bin/targets/
-  
-
+     
       - name: Upload release asset
         if: github.event == 'release'
         uses: svenstaro/upload-release-action@v2
@@ -338,3 +337,9 @@ jobs:
           repo_token: ${{ secrets.YOURTOKEN }}
           file: ./artifact/firmware/*
           tag: ${{ github.ref }}
+
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          retain_days: 15
+          keep_minimum_runs: 0
