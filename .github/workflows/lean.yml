@@ -145,7 +145,7 @@ jobs:
           # ./scripts/feeds update -a && rm -rf feeds/luci/applications/luci-app-mosdns && rm -rf feeds/packages/net/{alist,adguardhome,smartdns}
           # rm -rf feeds/packages/lang/golang
           git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
-          git clone https://github.com/gdy666/luci-app-lucky.git package/lucky
+          # git clone https://github.com/gdy666/luci-app-lucky.git package/lucky
           ./scripts/feeds update -a
           ./scripts/feeds install -a
       - name: Get new themes
@@ -232,9 +232,9 @@ jobs:
           # CONFIG_PACKAGE_luci-app-advanced=y
           CONFIG_PACKAGE_luci-app-eqos=y
           # CONFIG_PACKAGE_luci-app-pushbot=y
-          CONFIG_PACKAGE_luci-app-ttyd=y
+          # CONFIG_PACKAGE_luci-app-ttyd=y
           # CONFIG_PACKAGE_luci-app-hd-idle=y
-          CONFIG_PACKAGE_luci-app-minidlna=y
+          # CONFIG_PACKAGE_luci-app-minidlna=y
           # CONFIG_PACKAGE_luci-app-watchcat=y
           CONFIG_PACKAGE_luci-app-cpufreq=y
           CONFIG_PACKAGE_luci-app-diskman=y
@@ -243,7 +243,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-webadmin=y
           CONFIG_PACKAGE_luci-app-wrtbwmon=y
           CONFIG_PACKAGE_luci-app-msd_lite=y
-          CONFIG_PACKAGE_luci-app-lucky=y
+          # CONFIG_PACKAGE_luci-app-lucky=y
           CONFIG_PACKAGE_luci-app-filebrowser=y
           # CONFIG_PACKAGE_luci-app-vssr=y
           # CONFIG_PACKAGE_luci-app-v2ray-server=y
