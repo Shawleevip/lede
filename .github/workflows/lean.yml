@@ -83,8 +83,7 @@ jobs:
    
       - name: Update feeds
         run: |
-          
-          sed -i '1i s/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
+          sed -i '1i src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           sed -i '2i src-git small https://github.com/kenzok8/small' feeds.conf.default
           sed -i '3i src-git vmware https://github.com/vmware/open-vm-tools' feeds.conf.default
           sed -i '4i src-git taskplan https://github.com/sirpdboy/luci-app-taskplan' feeds.conf.default
@@ -203,7 +202,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
-          CONFIG_PACKAGE_luci-app-ssr-plus=n
+          CONFIG_PACKAGE_luci-app-ssr-plus=y
           # CONFIG_PACKAGE_luci-app-passwall=y
           # CONFIG_PACKAGE_luci-app-passwall2=y 
           CONFIG_PACKAGE_luci-app-openclash=y
