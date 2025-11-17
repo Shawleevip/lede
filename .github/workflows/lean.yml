@@ -210,7 +210,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
           CONFIG_PACKAGE_luci-app-ssr-plus=y
-          CONFIG_PACKAGE_luci-app-passwall=n
+          CONFIG_PACKAGE_luci-app-passwall=y
           # CONFIG_PACKAGE_luci-app-passwall2=y 
           CONFIG_PACKAGE_luci-app-openclash=y
           # CONFIG_PACKAGE_luci-app-mihomo=y
