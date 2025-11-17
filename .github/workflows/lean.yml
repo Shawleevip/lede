@@ -334,7 +334,7 @@ jobs:
       - name: Deliver firmware
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_6.12.x
+          name: OpenWrt_x86_6.12.x_${{ env.DATE }}
           path: ./artifact/firmware/*.img
      
       - name: Upload release asset
