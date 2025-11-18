@@ -313,13 +313,6 @@ jobs:
           cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
-
-          # 重命名 .img 文件为带日期格式
-          shopt -s nullglob
-          for f in ../artifact/firmware/*.img; do
-            mv "$f" "${f%.img}-${DATE}.img"
-          done
-          shopt -u nullglob
          
       - name: Deliver buildinfo
         uses: actions/upload-artifact@v4
@@ -337,7 +330,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: OpenWrt_x86_6.12.x
-          path: ./artifact/firmware/
+          path: ./bin/targets/
      
       - name: Upload release asset
         if: github.event == 'release'
