@@ -44,25 +44,6 @@ jobs:
          echo "--------------------------硬盘信息--------------------------"
          echo "硬盘数量: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
-      - name: Init Variables
-        id: vars
-        run: |
-          echo "DATE=$(date +'%Y.%m.%d-%H%M')" >> $GITHUB_ENV
-          echo "DATE2=$(date +'%m/%d %Y')" >> $GITHUB_ENV
-          echo "DATE3=$(date +'%m.%d')" >> $GITHUB_ENV
-          echo "DOCKERTAG=${{ secrets.DOCKER_ID }}/openwrt-6p:latest" >> $GITHUB_ENV
-
-          VERSION="$(echo "${{ github.event.action }}" | grep -Eo ' [0-9.]+' | sed -e 's/ //')" || true
-          if [ "$VERSION" ]; then
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-          else
-            echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV
-          fi
-
-          echo "=== Variables Loaded ==="
-          echo "DATE=$DATE"
-          echo "VERSION=$VERSION"
-
       - name: Initialization environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -321,23 +302,21 @@ jobs:
           du -h --max-depth=1 ./build_dir
           du -h --max-depth=1 ./bin
      
-      - name: Collect Build Artifacts
+      - name: Prepare artifact
         run: |
-          mkdir -p ../artifact/firmware ../artifact/package ../artifact/buildinfo
-        
-          # 删除不需要的 kernel/rootfs 文件，如果不存在则忽略
-          find ./bin/targets/ -type f -name "openwrt-x86-64-generic-kernel.bin" -delete 2>/dev/null || true
-          find ./bin/targets/ -type f -name "openwrt-x86-64-generic-squashfs-rootfs.img" -delete 2>/dev/null || true
-          find ./bin/targets/ -type d -name "packages" -exec rm -rf {} + 2>/dev/null || true
+          mkdir -p ./artifact/firmware
+          mkdir -p ./artifact/package
+          mkdir -p ./artifact/buildinfo
+          rm -rf $(find ./bin/targets/ -type f -name "openwrt-x86-64-generic-kernel.bin")
+          rm -rf $(find ./bin/targets/ -type f -name "openwrt-x86-64-generic-squashfs-rootfs.img")
+          rm -rf $(find ./bin/targets/ -type d -name "packages")
+          cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
+          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
+          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-          # 复制产物
-          find ./bin/targets/ -type f -exec cp -f {} ../artifact/firmware/ \;
-          find ./bin/packages/ -type f -name "*.ipk" -exec cp -f {} ../artifact/package/ \;
-          find ./bin/targets/ -type f \( -name "*.buildinfo" -o -name "*.manifest" \) -exec cp -f {} ../artifact/buildinfo/ \;
-
-           # 重命名 .img 文件为带日期格式
-           shopt -s nullglob
-           for f in ../artifact/firmware/*.img; do
+          # 重命名 .img 文件为带日期格式
+          shopt -s nullglob
+          for f in ../artifact/firmware/*.img; do
             mv "$f" "${f%.img}-${DATE}.img"
           done
           shopt -u nullglob
@@ -367,6 +346,7 @@ jobs:
           repo_token: ${{ secrets.SEARIY_TOKEN }}
           file: ./artifact/firmware/*
           tag: ${{ github.ref }}
+          file_glob: true
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
