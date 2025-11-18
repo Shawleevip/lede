@@ -287,7 +287,7 @@ jobs:
       - name: Make download
         run: |
           make download -j8
-          find dl -size -1024c -exec rm -f {} \;
+          find ./dl/ -size -1024c -exec rm -f {} \;
           df -h
      
       - name: Compile firmware
@@ -317,19 +317,19 @@ jobs:
       - name: Deliver buildinfo
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_6.12.x
+          name: OpenWrt_x86_buildinfo_6.12.x
           path: ./artifact/buildinfo/
 
       - name: Deliver package
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_6.12.x
+          name: OpenWrt_x86_package_6.12.x
           path: ./artifact/package/
       
       - name: Deliver firmware
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_6.12.x
+          name: OpenWrt_x86_firmware_6.12.x
           path: ./bin/targets/
      
       - name: Upload release asset
