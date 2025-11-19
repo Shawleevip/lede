@@ -146,7 +146,7 @@ jobs:
           
           # 固件压缩:
           cat >> .config <<EOF
-          ONFIG_TARGET_IMAGES_GZIP=n
+          CONFIG_TARGET_IMAGES_GZIP=n
           EOF
           
           # 编译UEFI固件:
