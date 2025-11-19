@@ -99,18 +99,18 @@ jobs:
           df -h
           ls -sh
 
-      - name: Free up disk space
-        run: |
-          sudo mkdir -p -m 777 /mnt/openwrt/dl /mnt/openwrt/bin /mnt/openwrt/staging_dir
-          ln -sf /mnt/openwrt/dl dl
-          ln -sf /mnt/openwrt/bin bin
-          ln -sf /mnt/openwrt/staging_dir staging_dir
+      #- name: Free up disk space
+        #run: |
+          #sudo mkdir -p -m 777 /mnt/openwrt/dl /mnt/openwrt/bin /mnt/openwrt/staging_dir
+          #ln -sf /mnt/openwrt/dl dl
+          #ln -sf /mnt/openwrt/bin bin
+          #ln -sf /mnt/openwrt/staging_dir staging_dir
 
-          echo "Symlinks created:"
-          ls -l
-          echo ""
-          echo "Disk usage:"
-          df -h
+          #echo "Symlinks created:"
+          #ls -l
+          #echo ""
+          #echo "Disk usage:"
+          #df -h
 
       - name: Update feeds
         run: |
@@ -334,15 +334,6 @@ jobs:
           skip: 'true'
           skip_saving: 'false'
 
-      - name: Check space usage
-        run: |
-          shopt -s extglob
-          cd openwrt
-          if [[ -f staging_dir/*${{ env.MTARGET }}*/bin ]]; then
-              rm -rf staging_dir/!(*${{ env.MTARGET }}*|host|hostpkg) build_dir/!(*${{ env.MTARGET }}*|host|hostpkg)
-          fi
-          df -hT 
-     
       - name: Compile firmware
         run: |
           make -j$(nproc) || make -j16 V=s
