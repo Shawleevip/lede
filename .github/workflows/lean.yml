@@ -69,13 +69,6 @@ jobs:
           swap-size-mb: 1024
           remove-dotnet: 'true'
 
-
-
-      - name: Move workspace to /mnt
-        run: |
-          sudo mv $GITHUB_WORKSPACE /mnt/work
-          sudo ln -s /mnt/work $GITHUB_WORKSPACE
-      
       - name: Checkout
         uses: actions/checkout@v4
   
