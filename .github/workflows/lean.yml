@@ -21,11 +21,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    name: OpenWrt_ ${{matrix.target}}
+    name: OpenWrt ${{matrix.target}}
     strategy:
       fail-fast: false
       matrix:
-        target: [x86_6.12_]
+        target: [x86]
     
     steps:
       - name: Checkout
@@ -72,16 +72,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Cache OpenWrt Build
+      - name: Cache
         uses: stupidloud/cachewrtbuild@main
         with:
-          ccache: true
-          mixkey: ${{ matrix.target }}
+          ccache: 'true'
+          mixkey: x86
           clean: ${{ contains(github.event.action, 'nocache') }}
-          prefix: ${{ github.workspace }}
+          prefix: ${{ github.workspace }}/openwrt
           toolchain: true
-          skip: false
-
+      
       - name: Build
         run: |
           echo "Free space:"
