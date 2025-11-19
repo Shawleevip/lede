@@ -121,6 +121,7 @@ jobs:
           CONFIG_TARGET_x86=y
           CONFIG_TARGET_x86_64=y
           CONFIG_TARGET_x86_64_Generic=y
+          CONFIG_TESTING_KERNEL=n
           EOF
 
           # 固件大小设置:
@@ -130,9 +131,9 @@ jobs:
           EOF
           
           # 固件压缩:
-          #cat >> .config <<EOF
-          #CONFIG_TARGET_IMAGES_GZIP=y
-          #EOF
+          cat >> .config <<EOF
+          ONFIG_TARGET_IMAGES_GZIP=n
+          EOF
           
           # 编译UEFI固件:
           cat >> .config <<EOF
@@ -271,6 +272,7 @@ jobs:
           CONFIG_PACKAGE_iftop=y
           CONFIG_PACKAGE_tcpdump=y
           CONFIG_PACKAGE_pv=y
+          CONFIG_PACKAGE_bind-host=y
           EOF
           
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
