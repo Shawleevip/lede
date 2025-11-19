@@ -81,6 +81,11 @@ jobs:
           prefix: ${{ github.workspace }}
           toolchain: 'false'        
           skip_saving: 'false' 
+
+      - name: Move workspace to /mnt
+        run: |
+          sudo mv $GITHUB_WORKSPACE /mnt/work
+          sudo ln -s /mnt/work $GITHUB_WORKSPACE
       
       - name: Checkout
         uses: actions/checkout@v4
