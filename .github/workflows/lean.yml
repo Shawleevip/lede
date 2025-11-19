@@ -75,6 +75,16 @@ jobs:
           echo "Free space:"
           df -h
           date
+
+      - name: Get current date
+        id: date
+        run: |
+          echo "date=$(date +'%Y.%m.%d-%H%M')" >> $GITHUB_ENV
+          echo "date2=$(date +'%m/%d %Y')" >> $GITHUB_ENV
+          echo "date3=$(date +'%m.%d')" >> $GITHUB_ENV
+          echo "DOCKERTAG=${{ secrets.DOCKER_ID }}/openwrt-6p:latest" >> $GITHUB_ENV
+          VERSION="$(echo "${{github.event.action}}" | grep -Eo " [0-9.]+" | sed -e 's/ //')" || true
+          [ "$VERSION" ] && echo "VERSION=$VERSION" >> $GITHUB_ENV || echo "VERSION=$(date +'%m.%d')" >> $GITHUB_ENV
    
       - name: other package
         run: |
@@ -321,19 +331,19 @@ jobs:
       - name: Deliver buildinfo
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_buildinfo_6.12.x
+          name:  ${{ env.date }}_OpenWrt_x86_buildinfo_6.12.x
           path: ./artifact/buildinfo/
 
       - name: Deliver package
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_package_6.12.x
+          name:  ${{ env.date }}_OpenWrt_x86_package_6.12.x
           path: ./artifact/package/
       
       - name: Deliver firmware
         uses: actions/upload-artifact@v4
         with:
-          name: OpenWrt_x86_firmware_6.12.x
+          name: ${{ env.date }}_OpenWrt_x86_firmware_6.12.x
           path: ./bin/targets/
      
       - name: Upload release asset
