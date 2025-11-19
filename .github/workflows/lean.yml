@@ -65,22 +65,22 @@ jobs:
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
-          root-reserve-mb: 1024
-          swap-size-mb: 4096
-          remove-dotnet: true
-          remove-android: true
-          remove-haskell: true
-          remove-docker-images: true
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-docker-images: 'true'
 
       - name: Cache OpenWrt Build
         uses: stupidloud/cachewrtbuild@main
         with:
-          ccache: true
+          ccache: 'true'
           mixkey: ${{ matrix.target }}
           clean: ${{ contains(github.event.action, 'nocache') }}
           prefix: ${{ github.workspace }}
-          toolchain: false        
-          skip_saving: false 
+          toolchain: 'false'        
+          skip_saving: 'false' 
       
       - name: Checkout
         uses: actions/checkout@v4
@@ -378,7 +378,7 @@ jobs:
           repo_token: ${{ secrets.SEARIY_TOKEN }}
           file: ./artifact/firmware/*
           tag: ${{ github.ref }}
-          file_glob: true
+          file_glob: 'true'
 
       - name: Delete workflow runs
         uses: Mattraks/delete-workflow-runs@main
