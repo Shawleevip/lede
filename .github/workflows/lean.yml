@@ -100,13 +100,17 @@ jobs:
           ls -sh
 
       - name: Free up disk space
-        env:
-          DEBIAN_FRONTEND: noninteractive
         run: |
           sudo mkdir -p -m 777 /mnt/openwrt/dl /mnt/openwrt/bin /mnt/openwrt/staging_dir
-          ln -sf /mnt/openwrt/dl openwrt/dl
-          ln -sf /mnt/openwrt/bin openwrt/bin
-          ln -sf /mnt/openwrt/staging_dir openwrt/staging_dir
+          ln -sf /mnt/openwrt/dl dl
+          ln -sf /mnt/openwrt/bin bin
+          ln -sf /mnt/openwrt/staging_dir staging_dir
+
+          echo "Symlinks created:"
+          ls -l
+          echo ""
+          echo "Disk usage:"
+          df -h
 
       - name: Update feeds
         run: |
