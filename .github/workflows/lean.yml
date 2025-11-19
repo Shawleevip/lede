@@ -70,6 +70,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Cache WRT Build
+        uses: stupidloud/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          mixkey: x86_64_6.12
+          clean: ${{ contains(github.event.action, 'nocache') }}
+          prefix: ${{ github.workspace }}/openwrt
+
       - name: Build
         run: |
           echo "Free space:"
