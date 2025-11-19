@@ -13,6 +13,8 @@ on:
   push:
     branches:
       - master
+  schedule:
+      - cron: 0 9 * * SAT
   release:
       types: [published]
 
@@ -347,5 +349,5 @@ jobs:
         uses: Mattraks/delete-workflow-runs@main
         with:
           token: ${{ secrets.SEARIY_TOKEN }}
-          retain_days: 15
+          retain_days: 20
           keep_minimum_runs: 1
