@@ -118,6 +118,7 @@ jobs:
           sed -i '1i src-git small https://github.com/kenzok8/small' feeds.conf.default
           sed -i '2i src-git vmware https://github.com/vmware/open-vm-tools' feeds.conf.default
           sed -i '3i src-git taskplan https://github.com/sirpdboy/luci-app-taskplan' feeds.conf.default
+          sed -i '4i src-git rtp2httpd https://github.com/stackia/rtp2httpd.git' feeds.conf.default
           # sed -i '5i src-git lucky https://github.com/gdy666/luci-app-lucky' feeds.conf.default
           # sed -i '6i src-git openlist2 https://github.com/sbwml/luci-app-openlist2' feeds.conf.default
           ./scripts/feeds update -a 
@@ -236,7 +237,8 @@ jobs:
           # CONFIG_PACKAGE_luci-app-verysync=y
           CONFIG_PACKAGE_luci-app-webadmin=y
           CONFIG_PACKAGE_luci-app-wrtbwmon=y
-          CONFIG_PACKAGE_luci-app-msd_lite=y
+          CONFIG_PACKAGE_luci-app-msd_lite=n
+          CONFIG_PACKAGE_luci-app-rtp2httpd=y
           # CONFIG_PACKAGE_luci-app-lucky=y
           CONFIG_PACKAGE_luci-app-filebrowser=n
           # CONFIG_PACKAGE_luci-app-vssr=y
