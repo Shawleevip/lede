@@ -388,9 +388,11 @@ jobs:
           tag: ${{ github.ref }}
           file_glob: 'true'
 
-      - name: Delete workflow runs
+      - name: Delete old workflow runs
         uses: Mattraks/delete-workflow-runs@main
         with:
           token: ${{ secrets.SEARIY_TOKEN }}
           retain_days: 20
           keep_minimum_runs: 1
+          delete_workflow_by_state_pattern: ALL
+          delete_run_by_conclusion_pattern: ALL
