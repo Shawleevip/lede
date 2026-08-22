@@ -1,0 +1,61 @@
+#
+# This is free software, licensed under the MIT License.
+# 
+# Copyright (C) 2019 KFERMercer <KFER.Mercer@gmail.com>
+# 
+# <https://github.com/KFERMercer/OpenWrt-CI>
+#
+# Updated: 2025 (Force Sync & Keep Workflows)
+#
+name: Merge-upstream-new
+
+on:
+  push:
+    branches: 
+      - master
+  schedule:
+    - cron: '0 * * * *' # 每小时执行一次
+  workflow_dispatch: # 允许手动点击按钮触发
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        ref: master
+        fetch-depth: 0 # 必须获取全部历史以便找回文件
+        lfs: true
+
+    - name: Set git identity
+      run: |
+        git config --global user.email "KFER.Mercer@gmail.com"
+        git config --global user.name "KFERMercer"
+
+    - name: Force sync upstream
+      run: |
+        # 1. 添加并拉取上游
+        git remote add upstream https://github.com/coolsnowwolf/lede.git
+        git fetch upstream master
+
+        # 2. 保存当前提交
+        OLD_HEAD=$(git rev-parse HEAD)
+
+        # 3. 强制将本地重置为上游状态
+        git reset --hard upstream/master
+
+        # 4. 恢复自己的 .github 目录
+        git checkout "$OLD_HEAD" -- .github
+
+        # 5. 如果你有其他想要保留的文件（比如 README.md），取消下面这行的注释
+        # git checkout "$OLD_HEAD" -- README.md
+
+        # 6. 提交这些恢复的文件
+        git commit -m "Keep custom GitHub files after force sync" || echo "No changes to commit"
+
+    - name: Push Commits
+      run: |
+        # 使用 --force 强制推送到你的 master 分支
+        git push origin master --force
